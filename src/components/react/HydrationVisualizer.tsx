@@ -1,30 +1,32 @@
 import { useState } from "react";
 
+const bundleInfo = (
+  <p class="mt-4 text-[11px] text-gray-500">
+    Bundle size contribution: ~2KB (React runtime shared across islands)
+  </p>
+);
+
 export default function HydrationVisualizer() {
   const [hydrated, setHydrated] = useState(false);
 
   return (
     <div
-      class={`border-2 rounded-xl p-6 transition-all duration-500 ${
-        hydrated
-          ? "border-green-500 bg-green-500/10"
-          : "border-gray-600 bg-gray-800"
+      class={`glass rounded-xl p-6 transition-all duration-500 ${
+        hydrated ? "border-l-2 border-l-green-500" : "border-l-2 border-l-gray-600"
       }`}
     >
       <div class="flex items-center gap-3 mb-3">
-        <div
-          class={`w-3 h-3 rounded-full ${
-            hydrated ? "bg-green-500 animate-pulse" : "bg-gray-500"
-          }`}
-        />
-        <span class="text-sm font-mono">
+        <span class={`w-2.5 h-2.5 rounded-full ${hydrated ? "bg-green-500 animate-pulse" : "bg-gray-500"}`} />
+        <span class="text-sm font-mono text-gray-400">
           Status:{" "}
-          <span class={hydrated ? "text-green-400" : "text-gray-400"}>
+          <span class={hydrated ? "text-green-400" : "text-gray-500"}>
             {hydrated ? "Hydrated" : "Static HTML"}
           </span>
         </span>
       </div>
-      <h3 class="text-lg font-semibold mb-2">Hydrated Island</h3>
+      <h3 class="font-heading text-base font-semibold text-white mb-2">
+        Hydrated Island
+      </h3>
       <p class="text-sm text-gray-400 mb-4">
         {hydrated
           ? "This component is now interactive! React event handlers are active."
@@ -33,17 +35,15 @@ export default function HydrationVisualizer() {
       <button
         onClick={() => setHydrated(true)}
         disabled={hydrated}
-        class={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+        class={`px-5 py-2 rounded-xl text-sm font-medium transition-all ${
           hydrated
-            ? "bg-gray-700 text-gray-500 cursor-not-allowed"
-            : "bg-purple-600 hover:bg-purple-700 text-white"
+            ? "bg-white/5 text-gray-500 cursor-not-allowed"
+            : "btn-gradient text-white"
         }`}
       >
         {hydrated ? "Hydrated" : "Hydrate Me"}
       </button>
-      <p class="mt-4 text-xs text-gray-500">
-        Bundle size contribution: ~2KB (React runtime shared across islands)
-      </p>
+      {bundleInfo}
     </div>
   );
 }

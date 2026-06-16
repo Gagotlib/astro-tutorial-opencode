@@ -4,37 +4,81 @@ import "../styles/global.css";
 export interface Props {
   title: string;
   description?: string;
+  image?: string;
+  canonical?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, image, canonical } = Astro.props;
+const siteUrl = "https://astro-tutorial.example.com";
+const defaultDescription = description || "Astro Tutorial for Next.js developers";
+const pageTitle = `${title} | Astro Tutorial`;
+const ogImage = image || `${siteUrl}/og-default.png`;
+const pageCanonical = canonical || `${siteUrl}${Astro.url.pathname}`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description || "Astro Tutorial for Next.js developers"} />
-    <title>{title} | Astro Tutorial</title>
+    <meta name="description" content={defaultDescription} />
+    <title>{pageTitle}</title>
+
+    <link rel="canonical" href={pageCanonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={defaultDescription} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={pageCanonical} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={defaultDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script is:inline>
+      (function() {
+        var theme = localStorage.getItem('theme');
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Astro Tutorial",
+      "url": siteUrl,
+      "description": "Educational Astro tutorial project for React/Next.js developers",
+    })} />
   </head>
-  <body class="bg-gray-950 text-gray-100 min-h-screen">
-    <nav class="border-b border-gray-800 bg-gray-900/50 backdrop-blur-sm sticky top-0 z-50">
-      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="/" class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+  <body class="font-body min-h-screen">
+    <nav class="fixed top-0 left-0 right-0 z-50" style="background: rgba(8, 8, 15, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(188, 82, 238, 0.15);">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+        <a
+          href="/"
+          class="text-xl font-heading font-bold bg-gradient-to-r from-astro-purple via-astro-pink to-astro-cyan bg-200 animate-gradient-x bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(188,82,238,0.3)]"
+        >
           Astro Tutorial
         </a>
-        <div class="flex gap-6 text-sm text-gray-400">
-          <a href="/" class="hover:text-white transition-colors">Home</a>
-          <a href="/blog" class="hover:text-white transition-colors">Blog</a>
-          <a href="/dashboard" class="hover:text-white transition-colors">Dashboard</a>
+        <div class="flex items-center gap-1">
+          <a href="/" class="px-3 py-1.5 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200">Home</a>
+          <a href="/blog" class="px-3 py-1.5 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200">Blog</a>
+          <a href="/dashboard" class="px-3 py-1.5 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200">Dashboard</a>
         </div>
       </div>
     </nav>
-    <main class="max-w-6xl mx-auto px-4 py-8">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-8 sm:pb-12 animate-fade-in">
       <slot />
     </main>
-    <footer class="border-t border-gray-800 mt-16 py-8 text-center text-sm text-gray-600">
-      <p>Astro Tutorial — Built for React/Next.js developers learning Astro</p>
+    <footer class="mt-16 border-t border-[rgba(255,255,255,0.04)] py-10 text-center">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="w-12 h-0.5 bg-gradient-to-r from-astro-purple to-astro-pink mx-auto mb-6 rounded-full" />
+        <p class="text-sm text-gray-600 font-body">Built for React & Next.js developers learning Astro</p>
+      </div>
     </footer>
   </body>
 </html>

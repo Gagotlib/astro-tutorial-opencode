@@ -1,89 +1,91 @@
-import { useState } from "react";
+import { useState } from "react"
 
 interface Todo {
-  id: number;
-  text: string;
-  done: boolean;
+  id: number
+  text: string
+  done: boolean
 }
+
+const todoInfo = (
+  <p className="mt-4 text-[11px] text-gray-500">
+    Full client-side state managed by React. Only this island ships JavaScript.
+  </p>
+)
 
 export default function TodoList() {
   const [todos, setTodos] = useState<Todo[]>([
     { id: 1, text: "Learn Astro fundamentals", done: true },
     { id: 2, text: "Understand islands architecture", done: false },
     { id: 3, text: "Build something awesome", done: false },
-  ]);
-  const [input, setInput] = useState("");
+  ])
+  const [input, setInput] = useState("")
 
   function addTodo() {
-    if (!input.trim()) return;
+    if (!input.trim()) return
     setTodos([
       ...todos,
       { id: Date.now(), text: input.trim(), done: false },
-    ]);
-    setInput("");
+    ])
+    setInput("")
   }
 
   function toggleTodo(id: number) {
-    setTodos(todos.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
+    setTodos(todos.map((t) => (t.id === id ? { ...t, done: !t.done } : t)))
   }
 
   function removeTodo(id: number) {
-    setTodos(todos.filter((t) => t.id !== id));
+    setTodos(todos.filter((t) => t.id !== id))
   }
 
   return (
-    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
-      <h3 class="text-lg font-semibold mb-4 text-purple-400">
+    <div className="glass rounded-xl p-6">
+      <h3 className="font-heading text-base font-semibold text-white mb-4">
         Interactive Todo List
       </h3>
-      <div class="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && addTodo()}
           placeholder="Add a new todo..."
-          class="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-astro-purple/40 transition-colors"
         />
         <button
           onClick={addTodo}
-          class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm transition-colors"
+          className="btn-gradient px-4 py-2 rounded-xl text-sm text-white"
         >
           Add
         </button>
       </div>
-      <ul class="space-y-2">
+      <ul className="space-y-2">
         {todos.map((todo) => (
           <li
             key={todo.id}
-            class="flex items-center gap-3 bg-gray-700/50 rounded-lg px-3 py-2"
+            className="flex items-center gap-3 bg-white/[0.03] rounded-xl px-3 py-2.5 border border-white/5"
           >
             <input
               type="checkbox"
               checked={todo.done}
               onChange={() => toggleTodo(todo.id)}
-              class="w-4 h-4 accent-purple-500"
+              className="w-4 h-4 accent-astro-purple rounded"
             />
             <span
-              class={`flex-1 text-sm ${
-                todo.done ? "line-through text-gray-500" : "text-gray-200"
-              }`}
+              className={`flex-1 text-sm ${todo.done ? "line-through text-gray-500" : "text-gray-200"
+                }`}
             >
               {todo.text}
             </span>
             <button
               onClick={() => removeTodo(todo.id)}
-              class="text-red-400 hover:text-red-300 text-xs"
+              className="text-red-400/70 hover:text-red-400 text-xs transition-colors"
             >
               Delete
             </button>
           </li>
         ))}
       </ul>
-      <p class="mt-4 text-xs text-gray-500">
-        Full client-side state managed by React. In Astro, only this island
-        ships JavaScript.
-      </p>
+      {todoInfo}
     </div>
-  );
+  )
 }

@@ -11,25 +11,32 @@ const description = "Interactive comparison of Astro rendering strategies and th
 ---
 
 <BaseLayout title={title} description={description}>
-  <section class="mb-8">
-    <h1 class="text-4xl font-bold mb-2">Performance Demonstration</h1>
-    <p class="text-gray-400">
+  <section class="text-center mb-12 pt-4 sm:pt-8">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-astro-purple/10 text-astro-purple border border-astro-purple/20 mb-4">
+      <span class="w-1.5 h-1.5 rounded-full bg-astro-purple" />
+      Rendering Strategies
+    </div>
+    <h1 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+      <span class="bg-gradient-to-r from-astro-purple via-astro-pink to-astro-cyan bg-clip-text text-transparent">Performance Demonstration</span>
+    </h1>
+    <p class="text-gray-400 max-w-xl mx-auto">
       This page compares different rendering strategies side by side. Open your
       browser's DevTools Network tab to see the actual bundle sizes.
     </p>
   </section>
 
   <section class="mb-12">
-    <h2 class="text-2xl font-bold mb-4 text-green-400">
-      1. Pure Static HTML (No JavaScript)
-    </h2>
-    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
-      <p class="text-gray-300 mb-4">
+    <div class="flex items-center gap-3 mb-4">
+      <span class="w-3 h-3 rounded-full bg-green-400" />
+      <h2 class="font-heading text-xl font-bold text-white">Pure Static HTML <span class="text-sm font-normal text-gray-400">(No JavaScript)</span></h2>
+    </div>
+    <div class="glass rounded-xl p-6">
+      <p class="text-gray-300 mb-4 leading-relaxed">
         This section is pure static HTML. Zero JavaScript is shipped for this
         content. It loads instantly, works without JS enabled, and can be cached
         on a CDN.
       </p>
-      <div class="bg-gray-700/50 rounded-lg p-4 text-sm font-mono text-gray-300">
+      <div class="code-block p-4 text-gray-300">
         <p class="text-green-400">// This is just HTML + CSS</p>
         <p>Bundle size: 0 KB JavaScript</p>
         <p>Hydration: None</p>
@@ -39,11 +46,12 @@ const description = "Interactive comparison of Astro rendering strategies and th
   </section>
 
   <section class="mb-12">
-    <h2 class="text-2xl font-bold mb-4 text-yellow-400">
-      2. Astro Page with One Small Island
-    </h2>
-    <p class="text-gray-400 mb-4">
-      This counter is a React island with <code class="text-purple-300">client:load</code>.
+    <div class="flex items-center gap-3 mb-4">
+      <span class="w-3 h-3 rounded-full bg-yellow-400" />
+      <h2 class="font-heading text-xl font-bold text-white">One Small Island <span class="text-sm font-normal text-gray-400">(client:load)</span></h2>
+    </div>
+    <p class="text-gray-400 mb-4 text-sm">
+      This counter is a React island with <code class="text-astro-cyan font-mono text-xs">client:load</code>.
       Only ~2KB of JS is shipped for this component. The rest of the page is static.
     </p>
     <div class="max-w-md">
@@ -52,10 +60,11 @@ const description = "Interactive comparison of Astro rendering strategies and th
   </section>
 
   <section class="mb-12">
-    <h2 class="text-2xl font-bold mb-4 text-orange-400">
-      3. Multiple Islands (Dashboard-like)
-    </h2>
-    <p class="text-gray-400 mb-4">
+    <div class="flex items-center gap-3 mb-4">
+      <span class="w-3 h-3 rounded-full bg-orange-400" />
+      <h2 class="font-heading text-xl font-bold text-white">Multiple Islands <span class="text-sm font-normal text-gray-400">(Dashboard-like)</span></h2>
+    </div>
+    <p class="text-gray-400 mb-4 text-sm">
       Even with multiple islands, total JS is minimal because React runtime is
       shared and each island is small.
     </p>
@@ -66,10 +75,11 @@ const description = "Interactive comparison of Astro rendering strategies and th
   </section>
 
   <section class="mb-12">
-    <h2 class="text-2xl font-bold mb-4 text-red-400">
-      4. Full Client-Side React (Simulated)
-    </h2>
-    <p class="text-gray-400 mb-4">
+    <div class="flex items-center gap-3 mb-4">
+      <span class="w-3 h-3 rounded-full bg-red-400" />
+      <h2 class="font-heading text-xl font-bold text-white">Full Client-Side React <span class="text-sm font-normal text-gray-400">(Simulated)</span></h2>
+    </div>
+    <p class="text-gray-400 mb-4 text-sm">
       The comparison below shows what happens when you have a fully interactive
       React app vs Astro islands. In a Next.js app, all this JS would ship on
       every page.
@@ -78,13 +88,15 @@ const description = "Interactive comparison of Astro rendering strategies and th
   </section>
 
   <section class="mb-12">
-    <h2 class="text-2xl font-bold mb-4 text-purple-400">
-      5. Hydration Strategy Comparison
-    </h2>
+    <div class="flex items-center gap-3 mb-6">
+      <div class="h-px flex-1 bg-gradient-to-r from-transparent via-astro-purple/30 to-transparent" />
+      <h2 class="font-heading text-xl font-bold text-white">Hydration Strategy Comparison</h2>
+      <div class="h-px flex-1 bg-gradient-to-r from-transparent via-astro-purple/30 to-transparent" />
+    </div>
     <div class="grid md:grid-cols-2 gap-6">
-      <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
-        <div class="flex items-center gap-2 mb-3">
-          <div class="w-3 h-3 rounded-full bg-green-500"></div>
+      <div class="glass rounded-xl p-6 border-l-2 border-l-green-500">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="w-2 h-2 rounded-full bg-green-500" />
           <span class="text-sm font-mono text-green-400">client:load</span>
         </div>
         <p class="text-sm text-gray-400 mb-4">
@@ -94,9 +106,9 @@ const description = "Interactive comparison of Astro rendering strategies and th
         <Counter client:load initial={0} />
       </div>
 
-      <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
-        <div class="flex items-center gap-2 mb-3">
-          <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+      <div class="glass rounded-xl p-6 border-l-2 border-l-yellow-500">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="w-2 h-2 rounded-full bg-yellow-500" />
           <span class="text-sm font-mono text-yellow-400">client:idle</span>
         </div>
         <p class="text-sm text-gray-400 mb-4">
@@ -108,81 +120,91 @@ const description = "Interactive comparison of Astro rendering strategies and th
   </section>
 
   <section class="mb-12">
-    <h2 class="text-2xl font-bold mb-4">Bundle Size Summary</h2>
-    <div class="overflow-x-auto">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="h-px flex-1 bg-gradient-to-r from-transparent via-astro-cyan/30 to-transparent" />
+      <h2 class="font-heading text-xl font-bold text-white">Bundle Size Summary</h2>
+      <div class="h-px flex-1 bg-gradient-to-r from-transparent via-astro-cyan/30 to-transparent" />
+    </div>
+    <div class="glass rounded-xl overflow-hidden">
       <table class="w-full text-sm">
         <thead>
-          <tr class="border-b border-gray-700">
-            <th class="text-left py-2 px-3">Strategy</th>
-            <th class="text-right py-2 px-3">HTML</th>
-            <th class="text-right py-2 px-3">JS</th>
-            <th class="text-right py-2 px-3">CSS</th>
-            <th class="text-right py-2 px-3">Total</th>
+          <tr class="border-b border-white/5 bg-white/[0.02]">
+            <th class="text-left py-3 px-4 text-gray-400 font-medium">Strategy</th>
+            <th class="text-right py-3 px-4 text-gray-400 font-medium">HTML</th>
+            <th class="text-right py-3 px-4 text-gray-400 font-medium">JS</th>
+            <th class="text-right py-3 px-4 text-gray-400 font-medium">CSS</th>
+            <th class="text-right py-3 px-4 text-gray-400 font-medium">Total</th>
           </tr>
         </thead>
         <tbody class="text-gray-300">
-          <tr class="border-b border-gray-800">
-            <td class="py-2 px-3">Pure Static</td>
-            <td class="text-right py-2 px-3 text-green-400">4.2 KB</td>
-            <td class="text-right py-2 px-3 text-green-400">0 KB</td>
-            <td class="text-right py-2 px-3">28 KB</td>
-            <td class="text-right py-2 px-3 text-green-400">32.2 KB</td>
+          <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+            <td class="py-3 px-4">Pure Static</td>
+            <td class="text-right py-3 px-4 text-green-400 font-mono text-xs">4.2 KB</td>
+            <td class="text-right py-3 px-4 text-green-400 font-mono text-xs">0 KB</td>
+            <td class="text-right py-3 px-4 font-mono text-xs">28 KB</td>
+            <td class="text-right py-3 px-4 text-green-400 font-mono text-xs">32.2 KB</td>
           </tr>
-          <tr class="border-b border-gray-800">
-            <td class="py-2 px-3">With 1 Island</td>
-            <td class="text-right py-2 px-3">4.5 KB</td>
-            <td class="text-right py-2 px-3 text-yellow-400">~2 KB</td>
-            <td class="text-right py-2 px-3">28 KB</td>
-            <td class="text-right py-2 px-3">34.5 KB</td>
+          <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+            <td class="py-3 px-4">With 1 Island</td>
+            <td class="text-right py-3 px-4 font-mono text-xs">4.5 KB</td>
+            <td class="text-right py-3 px-4 text-yellow-400 font-mono text-xs">~2 KB</td>
+            <td class="text-right py-3 px-4 font-mono text-xs">28 KB</td>
+            <td class="text-right py-3 px-4 font-mono text-xs">34.5 KB</td>
           </tr>
-          <tr class="border-b border-gray-800">
-            <td class="py-2 px-3">With 4 Islands</td>
-            <td class="text-right py-2 px-3">5.1 KB</td>
-            <td class="text-right py-2 px-3 text-yellow-400">~8 KB</td>
-            <td class="text-right py-2 px-3">28 KB</td>
-            <td class="text-right py-2 px-3">41.1 KB</td>
+          <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+            <td class="py-3 px-4">With 4 Islands</td>
+            <td class="text-right py-3 px-4 font-mono text-xs">5.1 KB</td>
+            <td class="text-right py-3 px-4 text-yellow-400 font-mono text-xs">~8 KB</td>
+            <td class="text-right py-3 px-4 font-mono text-xs">28 KB</td>
+            <td class="text-right py-3 px-4 font-mono text-xs">41.1 KB</td>
           </tr>
-          <tr>
-            <td class="py-2 px-3 text-red-400">Next.js SPA Equivalent</td>
-            <td class="text-right py-2 px-3">4.5 KB</td>
-            <td class="text-right py-2 px-3 text-red-400">~85 KB</td>
-            <td class="text-right py-2 px-3">28 KB</td>
-            <td class="text-right py-2 px-3 text-red-400">~117 KB</td>
+          <tr class="hover:bg-white/[0.02] transition-colors">
+            <td class="py-3 px-4 text-red-400 font-medium">Next.js SPA Equivalent</td>
+            <td class="text-right py-3 px-4 font-mono text-xs">4.5 KB</td>
+            <td class="text-right py-3 px-4 text-red-400 font-mono text-xs">~85 KB</td>
+            <td class="text-right py-3 px-4 font-mono text-xs">28 KB</td>
+            <td class="text-right py-3 px-4 text-red-400 font-mono text-xs">~117 KB</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p class="text-xs text-gray-500 mt-2">
-      * Approximate sizes. Actual values depend on your dependencies and content.
-      React runtime itself is ~42KB minified. Astro islands share this runtime.
+    <p class="text-xs text-gray-600 mt-3 text-center">
+      * Approximate sizes. Actual values depend on dependencies and content.
     </p>
   </section>
 
-  <section class="bg-gray-800 border border-gray-700 rounded-xl p-6">
-    <h2 class="text-xl font-bold mb-4">Key Takeaways</h2>
-    <ul class="space-y-3 text-sm text-gray-300">
-      <li class="flex gap-2">
-        <span class="text-green-400">-></span>
+  <section class="glass rounded-xl p-8 glow">
+    <h2 class="font-heading text-xl font-bold text-white mb-6 text-center">Key Takeaways</h2>
+    <ul class="space-y-4 text-sm text-gray-300 max-w-xl mx-auto">
+      <li class="flex gap-3 items-start">
+        <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 mt-0.5">
+          <svg class="w-3 h-3 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+        </span>
         Astro pages are <strong>static by default</strong> — zero JS overhead until you need it.
       </li>
-      <li class="flex gap-2">
-        <span class="text-green-400">-></span>
+      <li class="flex gap-3 items-start">
+        <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 mt-0.5">
+          <svg class="w-3 h-3 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+        </span>
         Interactive islands <strong>only ship their own JS</strong>, not the entire page's.
       </li>
-      <li class="flex gap-2">
-        <span class="text-green-400">-></span>
-        React runtime is <strong>shared across islands</strong>, so adding more islands adds minimal
-        extra JS.
+      <li class="flex gap-3 items-start">
+        <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 mt-0.5">
+          <svg class="w-3 h-3 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+        </span>
+        React runtime is <strong>shared across islands</strong>, adding more islands adds minimal extra JS.
       </li>
-      <li class="flex gap-2">
-        <span class="text-green-400">-></span>
-        In Next.js, every page loads the React runtime + component JS, even if the page is mostly
-        static content.
+      <li class="flex gap-3 items-start">
+        <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 mt-0.5">
+          <svg class="w-3 h-3 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+        </span>
+        In Next.js, every page loads the React runtime + component JS, even for mostly static content.
       </li>
-      <li class="flex gap-2">
-        <span class="text-green-400">-></span>
-        For content-heavy sites, Astro can be <strong>3-10x smaller</strong> in JS bundle size
-        compared to equivalent Next.js pages.
+      <li class="flex gap-3 items-start">
+        <span class="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center shrink-0 mt-0.5">
+          <svg class="w-3 h-3 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+        </span>
+        For content-heavy sites, Astro can be <strong>3-10x smaller</strong> in JS bundle size.
       </li>
     </ul>
   </section>

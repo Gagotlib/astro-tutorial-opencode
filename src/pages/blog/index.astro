@@ -10,23 +10,41 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
 <BaseLayout title="Blog" description="Astro tutorial blog posts">
-  <section class="mb-8">
-    <h1 class="text-4xl font-bold mb-2">Blog</h1>
-    <p class="text-gray-400">
+  <section class="text-center mb-12 pt-4 sm:pt-8">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-astro-purple/10 text-astro-purple border border-astro-purple/20 mb-4">
+      <span class="w-1.5 h-1.5 rounded-full bg-astro-purple" />
+      Astro Tutorial
+    </div>
+    <h1 class="font-heading text-4xl sm:text-5xl font-bold mb-4">
+      <span class="bg-gradient-to-r from-astro-purple to-astro-pink bg-clip-text text-transparent">Blog</span>
+    </h1>
+    <p class="text-gray-400 max-w-xl mx-auto">
       Educational articles comparing Astro and Next.js concepts. Each post
       explains an Astro feature and its Next.js equivalent.
     </p>
   </section>
 
-  <div class="grid gap-6 mb-12">
-    {posts.map((post) => (
+  <div class="grid gap-5 mb-16">
+    {posts.map((post, i) => (
       <a
         href={`/blog/${post.slug}`}
-        class="block bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-purple-500 transition-colors"
+        class="group glass rounded-xl p-6 glass-hover"
+        style={`animation-delay: ${i * 80}ms`}
       >
-        <h2 class="text-xl font-semibold mb-2">{post.data.title}</h2>
-        <p class="text-sm text-gray-400 mb-3">{post.data.description}</p>
-        <div class="flex items-center gap-4 text-xs text-gray-500">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+          <div class="flex-1">
+            <h2 class="font-heading text-lg font-semibold text-white mb-2 group-hover:text-astro-purple transition-colors">
+              {post.data.title}
+            </h2>
+            <p class="text-sm text-gray-400 leading-relaxed">{post.data.description}</p>
+          </div>
+          {post.data.nextJsEquivalent && (
+            <span class="tag shrink-0 self-start">
+              Next.js: {post.data.nextJsEquivalent}
+            </span>
+          )}
+        </div>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-4 text-xs text-gray-500">
           <time datetime={post.data.pubDate.toISOString()}>
             {post.data.pubDate.toLocaleDateString("en-US", {
               year: "numeric",
@@ -34,32 +52,33 @@ posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
               day: "numeric",
             })}
           </time>
+          <span class="text-gray-600">/</span>
           <span>{post.data.author}</span>
-          {post.data.nextJsEquivalent && (
-            <span class="text-blue-400">
-              Next.js: {post.data.nextJsEquivalent}
-            </span>
-          )}
-        </div>
-        <div class="flex gap-2 mt-3">
-          {post.data.tags.map((tag) => (
-            <span class="bg-gray-700 text-gray-400 px-2 py-0.5 rounded text-xs">
-              {tag}
-            </span>
-          ))}
+          <div class="flex gap-1.5 ml-auto">
+            {post.data.tags.map((tag) => (
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-white/5 text-gray-400 border border-white/5">
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       </a>
     ))}
   </div>
 
-  <section class="border-t border-gray-800 pt-8">
-    <h2 class="text-xl font-bold mb-4 text-purple-400">
-      Interactive Example: Island in a Blog Page
-    </h2>
-    <p class="text-gray-400 mb-4 text-sm">
+  <section class="glass rounded-xl p-8 text-center">
+    <div class="flex items-center gap-3 justify-center mb-4">
+      <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+      <h2 class="font-heading text-lg font-semibold text-white">
+        Island in a Blog Page
+      </h2>
+    </div>
+    <p class="text-gray-400 text-sm mb-6 max-w-md mx-auto">
       This counter is a React island on a static blog index page. Only this
       component ships JavaScript.
     </p>
-    <Counter client:load initial={42} />
+    <div class="max-w-xs mx-auto">
+      <Counter client:load initial={0} />
+    </div>
   </section>
 </BaseLayout>
