@@ -1,0 +1,64 @@
+﻿---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LoginForm from "../components/react/LoginForm";
+import { getSession } from "../lib/auth";
+
+const user = getSession(Astro.cookies);
+---
+
+<BaseLayout title="Login" description="Demo login page for authentication tutorial">
+  <section class="max-w-lg mx-auto">
+    {
+      user ? (
+        <div class="bg-gray-800 border border-gray-700 rounded-xl p-8 text-center">
+          <h2 class="text-2xl font-bold mb-4 text-green-400">Already Logged In</h2>
+          <p class="text-gray-400 mb-4">You are logged in as {user.name}.</p>
+          <div class="flex gap-4 justify-center">
+            <a
+              href="/dashboard"
+              class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition-colors"
+            >
+              Go to Dashboard
+            </a>
+            <a
+              href="/api/logout"
+              class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors"
+            >
+              Logout
+            </a>
+          </div>
+        </div>
+      ) : (
+        <LoginForm client:load returnUrl="/dashboard" />
+      )
+    }
+  </section>
+
+  <section class="mt-12 max-w-2xl mx-auto">
+    <h2 class="text-2xl font-bold mb-4 text-purple-400">How Auth Works in Astro</h2>
+    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6 space-y-4">
+      <div>
+        <h3 class="font-semibold mb-1">1. Server-Side Session Check</h3>
+        <p class="text-sm text-gray-400">
+          In Astro, you check cookies in the frontmatter (---) of the page. This runs on the
+          server, so no session data reaches the client.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-1">2. API Endpoint for Login</h3>
+        <p class="text-sm text-gray-400">
+          The login form POSTs to <code class="text-purple-300">/api/login</code>, which validates
+          credentials and sets a session cookie.
+        </p>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-1">3. Comparison with Next.js</h3>
+        <p class="text-sm text-gray-400">
+          Next.js typically uses <code class="text-blue-300">next-auth</code> or middleware for auth.
+          Astro's approach is simpler because pages are static by default - you opt into SSR only
+          for pages that need session checks.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

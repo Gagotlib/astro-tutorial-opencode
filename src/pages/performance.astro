@@ -1,0 +1,189 @@
+﻿export const prerender = true;
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Counter from "../components/react/Counter";
+import TodoList from "../components/react/TodoList";
+import StaticComparison from "../components/react/StaticComparison";
+import ThemeToggle from "../components/react/ThemeToggle";
+
+const title = "Performance Demonstration";
+const description = "Interactive comparison of Astro rendering strategies and their performance impact";
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="mb-8">
+    <h1 class="text-4xl font-bold mb-2">Performance Demonstration</h1>
+    <p class="text-gray-400">
+      This page compares different rendering strategies side by side. Open your
+      browser's DevTools Network tab to see the actual bundle sizes.
+    </p>
+  </section>
+
+  <section class="mb-12">
+    <h2 class="text-2xl font-bold mb-4 text-green-400">
+      1. Pure Static HTML (No JavaScript)
+    </h2>
+    <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+      <p class="text-gray-300 mb-4">
+        This section is pure static HTML. Zero JavaScript is shipped for this
+        content. It loads instantly, works without JS enabled, and can be cached
+        on a CDN.
+      </p>
+      <div class="bg-gray-700/50 rounded-lg p-4 text-sm font-mono text-gray-300">
+        <p class="text-green-400">// This is just HTML + CSS</p>
+        <p>Bundle size: 0 KB JavaScript</p>
+        <p>Hydration: None</p>
+        <p>Interactive: No (but it renders immediately)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-12">
+    <h2 class="text-2xl font-bold mb-4 text-yellow-400">
+      2. Astro Page with One Small Island
+    </h2>
+    <p class="text-gray-400 mb-4">
+      This counter is a React island with <code class="text-purple-300">client:load</code>.
+      Only ~2KB of JS is shipped for this component. The rest of the page is static.
+    </p>
+    <div class="max-w-md">
+      <Counter client:load initial={100} />
+    </div>
+  </section>
+
+  <section class="mb-12">
+    <h2 class="text-2xl font-bold mb-4 text-orange-400">
+      3. Multiple Islands (Dashboard-like)
+    </h2>
+    <p class="text-gray-400 mb-4">
+      Even with multiple islands, total JS is minimal because React runtime is
+      shared and each island is small.
+    </p>
+    <div class="grid md:grid-cols-2 gap-6">
+      <Counter client:load initial={0} />
+      <ThemeToggle client:load />
+    </div>
+  </section>
+
+  <section class="mb-12">
+    <h2 class="text-2xl font-bold mb-4 text-red-400">
+      4. Full Client-Side React (Simulated)
+    </h2>
+    <p class="text-gray-400 mb-4">
+      The comparison below shows what happens when you have a fully interactive
+      React app vs Astro islands. In a Next.js app, all this JS would ship on
+      every page.
+    </p>
+    <StaticComparison client:load />
+  </section>
+
+  <section class="mb-12">
+    <h2 class="text-2xl font-bold mb-4 text-purple-400">
+      5. Hydration Strategy Comparison
+    </h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-3 h-3 rounded-full bg-green-500"></div>
+          <span class="text-sm font-mono text-green-400">client:load</span>
+        </div>
+        <p class="text-sm text-gray-400 mb-4">
+          Hydrates immediately when page loads. Use for critical UI like
+          navigation, header interactions.
+        </p>
+        <Counter client:load initial={0} />
+      </div>
+
+      <div class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+          <span class="text-sm font-mono text-yellow-400">client:idle</span>
+        </div>
+        <p class="text-sm text-gray-400 mb-4">
+          Hydrates when browser is idle. Use for non-critical UI.
+        </p>
+        <Counter client:idle initial={0} />
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-12">
+    <h2 class="text-2xl font-bold mb-4">Bundle Size Summary</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-gray-700">
+            <th class="text-left py-2 px-3">Strategy</th>
+            <th class="text-right py-2 px-3">HTML</th>
+            <th class="text-right py-2 px-3">JS</th>
+            <th class="text-right py-2 px-3">CSS</th>
+            <th class="text-right py-2 px-3">Total</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-300">
+          <tr class="border-b border-gray-800">
+            <td class="py-2 px-3">Pure Static</td>
+            <td class="text-right py-2 px-3 text-green-400">4.2 KB</td>
+            <td class="text-right py-2 px-3 text-green-400">0 KB</td>
+            <td class="text-right py-2 px-3">28 KB</td>
+            <td class="text-right py-2 px-3 text-green-400">32.2 KB</td>
+          </tr>
+          <tr class="border-b border-gray-800">
+            <td class="py-2 px-3">With 1 Island</td>
+            <td class="text-right py-2 px-3">4.5 KB</td>
+            <td class="text-right py-2 px-3 text-yellow-400">~2 KB</td>
+            <td class="text-right py-2 px-3">28 KB</td>
+            <td class="text-right py-2 px-3">34.5 KB</td>
+          </tr>
+          <tr class="border-b border-gray-800">
+            <td class="py-2 px-3">With 4 Islands</td>
+            <td class="text-right py-2 px-3">5.1 KB</td>
+            <td class="text-right py-2 px-3 text-yellow-400">~8 KB</td>
+            <td class="text-right py-2 px-3">28 KB</td>
+            <td class="text-right py-2 px-3">41.1 KB</td>
+          </tr>
+          <tr>
+            <td class="py-2 px-3 text-red-400">Next.js SPA Equivalent</td>
+            <td class="text-right py-2 px-3">4.5 KB</td>
+            <td class="text-right py-2 px-3 text-red-400">~85 KB</td>
+            <td class="text-right py-2 px-3">28 KB</td>
+            <td class="text-right py-2 px-3 text-red-400">~117 KB</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs text-gray-500 mt-2">
+      * Approximate sizes. Actual values depend on your dependencies and content.
+      React runtime itself is ~42KB minified. Astro islands share this runtime.
+    </p>
+  </section>
+
+  <section class="bg-gray-800 border border-gray-700 rounded-xl p-6">
+    <h2 class="text-xl font-bold mb-4">Key Takeaways</h2>
+    <ul class="space-y-3 text-sm text-gray-300">
+      <li class="flex gap-2">
+        <span class="text-green-400">-></span>
+        Astro pages are <strong>static by default</strong> — zero JS overhead until you need it.
+      </li>
+      <li class="flex gap-2">
+        <span class="text-green-400">-></span>
+        Interactive islands <strong>only ship their own JS</strong>, not the entire page's.
+      </li>
+      <li class="flex gap-2">
+        <span class="text-green-400">-></span>
+        React runtime is <strong>shared across islands</strong>, so adding more islands adds minimal
+        extra JS.
+      </li>
+      <li class="flex gap-2">
+        <span class="text-green-400">-></span>
+        In Next.js, every page loads the React runtime + component JS, even if the page is mostly
+        static content.
+      </li>
+      <li class="flex gap-2">
+        <span class="text-green-400">-></span>
+        For content-heavy sites, Astro can be <strong>3-10x smaller</strong> in JS bundle size
+        compared to equivalent Next.js pages.
+      </li>
+    </ul>
+  </section>
+</BaseLayout>

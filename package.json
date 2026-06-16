@@ -1,0 +1,26 @@
+{
+  "name": "astro-tutorial-opencode",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Educational Astro tutorial project for React/Next.js developers",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.5.5",
+    "@astrojs/react": "^4.2.1",
+    "@astrojs/tailwind": "^6.0.0",
+    "astro": "^5.5.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5"
+  }
+}

@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Counter from "../components/react/Counter";
+import TodoList from "../components/react/TodoList";
+import ThemeToggle from "../components/react/ThemeToggle";
+import HydrationVisualizer from "../components/react/HydrationVisualizer";
+import StaticComparison from "../components/react/StaticComparison";
+import { getSession } from "../lib/auth";
+
+const user = getSession(Astro.cookies);
+---
+
+<BaseLayout title="Dashboard" description="Interactive dashboard with Astro islands">
+  <section class="mb-8">
+    <h1 class="text-4xl font-bold mb-2">Interactive Dashboard</h1>
+    {user ? (
+      <p class="text-green-400">
+        Welcome back, {user.name}!
+        <a href="/api/logout" class="text-sm text-gray-400 ml-4 hover:text-white">
+          Logout
+        </a>
+      </p>
+    ) : (
+      <p class="text-gray-400">
+        <a href="/login" class="text-purple-400 hover:text-purple-300">
+          Login
+        </a>{" "}
+        to see authentication in action.
+      </p>
+    )}
+    <p class="text-gray-500 text-sm mt-1">
+      This page demonstrates multiple interactive islands working together. Each
+      React component is independently hydrated.
+    </p>
+  </section>
+
+  <section class="mb-12">
+    <h2 class="text-xl font-semibold mb-4 text-purple-400">
+      Active Islands
+    </h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <Counter client:load initial={0} />
+      <ThemeToggle client:load />
+      <HydrationVisualizer client:load />
+    </div>
+  </section>
+
+  <section class="mb-12">
+    <h2 class="text-xl font-semibold mb-4 text-purple-400">
+      Todo Manager
+    </h2>
+    <div class="max-w-lg">
+      <TodoList client:load />
+    </div>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-semibold mb-4 text-purple-400">
+      Performance Insights
+    </h2>
+    <p class="text-gray-400 text-sm mb-4">
+      This dashboard loads multiple React islands, but total JS is still much
+      smaller than a traditional React SPA because the rest of the page is
+      static HTML.
+    </p>
+    <StaticComparison client:load />
+  </section>
+
+  <section class="mt-12 border-t border-gray-800 pt-8">
+    <h2 class="text-xl font-bold mb-4 text-purple-400">
+      Astro Fundamentals Reference
+    </h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      <a href="/blog/01-astro-vs-nextjs" class="bg-gray-800 rounded-lg p-4 hover:bg-gray-750 transition-colors">
+        <h3 class="font-semibold mb-1">Astro vs Next.js</h3>
+        <p class="text-sm text-gray-400">Framework comparison</p>
+      </a>
+      <a href="/blog/02-islands-architecture" class="bg-gray-800 rounded-lg p-4 hover:bg-gray-750 transition-colors">
+        <h3 class="font-semibold mb-1">Islands Architecture</h3>
+        <p class="text-sm text-gray-400">Hydration model explained</p>
+      </a>
+      <a href="/blog/03-ssg-vs-ssr" class="bg-gray-800 rounded-lg p-4 hover:bg-gray-750 transition-colors">
+        <h3 class="font-semibold mb-1">SSG vs SSR</h3>
+        <p class="text-sm text-gray-400">Rendering strategies</p>
+      </a>
+      <a href="/blog/04-content-collections" class="bg-gray-800 rounded-lg p-4 hover:bg-gray-750 transition-colors">
+        <h3 class="font-semibold mb-1">Content Collections</h3>
+        <p class="text-sm text-gray-400">Markdown management</p>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

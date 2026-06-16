@@ -1,0 +1,65 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import Counter from "../../components/react/Counter";
+
+const posts = await getCollection("blog");
+posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<BaseLayout title="Blog" description="Astro tutorial blog posts">
+  <section class="mb-8">
+    <h1 class="text-4xl font-bold mb-2">Blog</h1>
+    <p class="text-gray-400">
+      Educational articles comparing Astro and Next.js concepts. Each post
+      explains an Astro feature and its Next.js equivalent.
+    </p>
+  </section>
+
+  <div class="grid gap-6 mb-12">
+    {posts.map((post) => (
+      <a
+        href={`/blog/${post.slug}`}
+        class="block bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-purple-500 transition-colors"
+      >
+        <h2 class="text-xl font-semibold mb-2">{post.data.title}</h2>
+        <p class="text-sm text-gray-400 mb-3">{post.data.description}</p>
+        <div class="flex items-center gap-4 text-xs text-gray-500">
+          <time datetime={post.data.pubDate.toISOString()}>
+            {post.data.pubDate.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </time>
+          <span>{post.data.author}</span>
+          {post.data.nextJsEquivalent && (
+            <span class="text-blue-400">
+              Next.js: {post.data.nextJsEquivalent}
+            </span>
+          )}
+        </div>
+        <div class="flex gap-2 mt-3">
+          {post.data.tags.map((tag) => (
+            <span class="bg-gray-700 text-gray-400 px-2 py-0.5 rounded text-xs">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <section class="border-t border-gray-800 pt-8">
+    <h2 class="text-xl font-bold mb-4 text-purple-400">
+      Interactive Example: Island in a Blog Page
+    </h2>
+    <p class="text-gray-400 mb-4 text-sm">
+      This counter is a React island on a static blog index page. Only this
+      component ships JavaScript.
+    </p>
+    <Counter client:load initial={42} />
+  </section>
+</BaseLayout>

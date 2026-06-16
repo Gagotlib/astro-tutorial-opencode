@@ -1,0 +1,88 @@
+---
+export const prerender = true;
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Counter from "../components/react/Counter";
+import TodoList from "../components/react/TodoList";
+import StaticComparison from "../components/react/StaticComparison";
+---
+
+<BaseLayout title="Home" description="Learn Astro from Next.js perspective">
+  <section class="text-center mb-16">
+    <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 bg-clip-text text-transparent">
+      From Next.js to Astro
+    </h1>
+    <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+      A practical guide for React and Next.js developers to understand Astro's
+      philosophy, architecture, and performance benefits.
+    </p>
+  </section>
+
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-purple-400">
+      What Makes Astro Different?
+    </h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <a href="/blog/01-astro-vs-nextjs" class="block bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-purple-500 transition-colors">
+        <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+          <span class="text-purple-400 text-xl">1</span>
+        </div>
+        <h3 class="font-semibold mb-2">Astro vs Next.js</h3>
+        <p class="text-sm text-gray-400">
+          Core philosophy, trade-offs, and when to use each framework.
+        </p>
+      </a>
+      <a href="/blog/02-islands-architecture" class="block bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-purple-500 transition-colors">
+        <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+          <span class="text-purple-400 text-xl">2</span>
+        </div>
+        <h3 class="font-semibold mb-2">Islands Architecture</h3>
+        <p class="text-sm text-gray-400">
+          How Astro's partial hydration delivers better performance.
+        </p>
+      </a>
+      <a href="/blog/03-ssg-vs-ssr" class="block bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-purple-500 transition-colors">
+        <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+          <span class="text-purple-400 text-xl">3</span>
+        </div>
+        <h3 class="font-semibold mb-2">SSG vs SSR</h3>
+        <p class="text-sm text-gray-400">
+          Static generation vs server rendering in Astro and Next.js.
+        </p>
+      </a>
+      <a href="/blog/04-content-collections" class="block bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-purple-500 transition-colors">
+        <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+          <span class="text-purple-400 text-xl">4</span>
+        </div>
+        <h3 class="font-semibold mb-2">Content Collections</h3>
+        <p class="text-sm text-gray-400">
+          Built-in Markdown management with schema validation.
+        </p>
+      </a>
+    </div>
+  </section>
+
+  <section class="mb-16" id="interactive">
+    <h2 class="text-2xl font-bold mb-2 text-purple-400">
+      Interactive Islands
+    </h2>
+    <p class="text-gray-400 mb-6">
+      These React components only ship JavaScript because of their{" "}
+      <code class="text-purple-300">client:load</code> directive.
+    </p>
+    <div class="grid md:grid-cols-2 gap-6">
+      <Counter client:load initial={0} />
+      <TodoList client:load />
+    </div>
+  </section>
+
+  <section class="mb-16">
+    <h2 class="text-2xl font-bold mb-2 text-purple-400">
+      Performance Comparison
+    </h2>
+    <p class="text-gray-400 mb-6">
+      See how different rendering approaches affect bundle size and hydration.
+    </p>
+    <StaticComparison client:load />
+  </section>
+</BaseLayout>

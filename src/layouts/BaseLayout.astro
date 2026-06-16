@@ -1,0 +1,40 @@
+---
+import "../styles/global.css";
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description || "Astro Tutorial for Next.js developers"} />
+    <title>{title} | Astro Tutorial</title>
+  </head>
+  <body class="bg-gray-950 text-gray-100 min-h-screen">
+    <nav class="border-b border-gray-800 bg-gray-900/50 backdrop-blur-sm sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="/" class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          Astro Tutorial
+        </a>
+        <div class="flex gap-6 text-sm text-gray-400">
+          <a href="/" class="hover:text-white transition-colors">Home</a>
+          <a href="/blog" class="hover:text-white transition-colors">Blog</a>
+          <a href="/dashboard" class="hover:text-white transition-colors">Dashboard</a>
+        </div>
+      </div>
+    </nav>
+    <main class="max-w-6xl mx-auto px-4 py-8">
+      <slot />
+    </main>
+    <footer class="border-t border-gray-800 mt-16 py-8 text-center text-sm text-gray-600">
+      <p>Astro Tutorial — Built for React/Next.js developers learning Astro</p>
+    </footer>
+  </body>
+</html>
